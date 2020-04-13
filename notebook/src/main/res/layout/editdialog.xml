@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="left"
+    android:padding="10dp"
+     >
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/lbl_add"
+        android:textColor="#FFF"
+        android:textSize="18sp"
+        android:layout_marginBottom="15dp" />
+        
+    <EditText android:id="@+id/editText"
+	   android:layout_width="fill_parent"
+	   android:layout_height="wrap_content"
+	   android:background="@android:color/white"
+	   android:textColor="#000"
+	   android:inputType="textMultiLine"
+	   android:minLines="4"
+	   android:scrollHorizontally="false"
+	   android:singleLine="false"
+	   android:maxLines="8"
+	   android:gravity="top"
+	   android:layout_marginBottom="5dp"
+	   android:layout_below="@+id/tv_title" />
+
+	<Button
+		android:id="@+id/btn_ok"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/editText"
+		android:layout_alignParentRight="true"
+		android:layout_marginTop="4dp"
+		android:layout_marginRight="2dp"
+		android:background="@drawable/button"
+		android:minWidth="90dp"
+		android:text="@android:string/ok"
+		android:textColor="#fff" />
+
+	<Button
+		android:id="@+id/btn_cancel"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/editText"
+		android:layout_marginTop="4dp"
+		android:layout_marginRight="10dp"
+		android:layout_toLeftOf="@+id/btn_ok"
+		android:background="@drawable/button"
+		android:minWidth="90dp"
+		android:text="@android:string/cancel"
+		android:textColor="#fff" />
+
+	<Button
+		android:id="@+id/btn_delete"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/editText"
+		android:layout_marginTop="4dp"
+		android:layout_marginRight="10dp"
+		android:layout_toLeftOf="@+id/btn_cancel"
+		android:background="@drawable/button"
+		android:minWidth="70dp"
+		android:text="@string/btn_delete"
+		android:textColor="#fff" />
+    
+</RelativeLayout>
