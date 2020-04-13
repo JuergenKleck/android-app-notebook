@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Notebook</string>
+ <string name="title_settings">Settings</string>
+    
+    <string name="menu_settings">Settings</string>
+    <string name="menu_configure">Edit items</string>
+    <string name="menu_add">Add new item</string>
+
+    <string name="delete_entry">Delete entry</string>
+    <string name="delete_entry_text">Delete: {0}</string>
+    <string name="general_settings">General settings</string>
+    
+    <string name="lbl_add">Add new note</string>
+    <string name="lbl_edit">Edit note</string>
+    
+    <string name="lbl_title">Notes ({0})</string>
+    <string name="lbl_plus">+</string>
+    <string name="lbl_dash">-</string>
+    
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_ok">OK</string>
+    <string name="btn_delete">Delete</string>
+	<string name="btn_back">Back</string>
+    <string name="btn_backup">Backup</string>
+	
+    <string name="btn_settings">Settings</string>
+    
+    <string name="autotextsize">Use default text size</string>
+	<string name="defaulttextsize">Text size:</string>
+		
+    <string name="migration">Migration complete</string>
+	<string name="empty"></string>
+
+	<string name="lbl_backup">Item backup</string>
+	<string name="btn_import">Import</string>
+	<string name="btn_export">Export</string>
+	
+	<string name="import_done">Import finished</string>
+	<string name="export_done">Exported: </string>
+	<string name="import_notfound">Import file not found</string>
+	<string name="error">Error</string>
+    	
+</resources>
