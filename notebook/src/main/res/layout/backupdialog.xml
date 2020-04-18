@@ -12,7 +12,7 @@
         android:layout_alignParentLeft="true"
         android:layout_marginBottom="8dp"
         android:text="@string/lbl_backup"
-        android:textColor="#FFF"
+        android:textColor="#000"
         android:textSize="18sp" />
 
     <EditText
@@ -21,8 +21,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView_backup"
         android:layout_marginTop="5dp"
+        android:background="@drawable/input_border"
         android:ems="10"
-        android:inputType="textUri" >
+        android:textColor="#000"
+        android:inputType="textUri">
 
         <requestFocus />
     </EditText>

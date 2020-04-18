@@ -35,17 +35,17 @@ public class HomeScreen extends GenericScreenTemplate {
     private Dialog editDialog;
     private TextView lblTitle;
 
-    List<Entry> entries = new ArrayList<Entry>();
+    List<Entry> entries = new ArrayList<>();
     Entry currentEntry = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        lTable = (ViewGroup) findViewById(R.id.tableLayoutList);
-        lblTitle = (TextView) findViewById(R.id.section_label);
+        lTable = findViewById(R.id.tableLayoutList);
+        lblTitle = findViewById(R.id.section_label);
 
-        TextView lblAdd = (TextView) findViewById(R.id.section_add);
+        TextView lblAdd = findViewById(R.id.section_add);
         lblAdd.setOnClickListener(onAddClick);
 
         // App initializations
@@ -95,6 +95,10 @@ public class HomeScreen extends GenericScreenTemplate {
         StorageUtil.prepareStorage(getApplicationContext());
     }
 
+    @Override
+    public void onPermissionResult(String s, boolean b) {
+    }
+
     public void actionSettings() {
         Intent wordIntent = new Intent(this, ConfigureScreen.class);
         wordIntent.setData(getIntent().getData());
@@ -104,23 +108,24 @@ public class HomeScreen extends GenericScreenTemplate {
     private void createEditDialog() {
         // prepare edit dialog
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        assert inflater != null;
         inflater.inflate(R.layout.editdialog, null);
-        editDialog = new Dialog(this, R.style.Theme_Dialog);
+        editDialog = new Dialog(this, R.style.Theme_AppCompat_Dialog);
         editDialog.setContentView(R.layout.editdialog);
 
-        Button bOk = (Button) editDialog.findViewById(R.id.btn_ok);
-        Button bCancel = (Button) editDialog.findViewById(R.id.btn_cancel);
-        Button bDelete = (Button) editDialog.findViewById(R.id.btn_delete);
+        Button bOk = editDialog.findViewById(R.id.btn_ok);
+        Button bCancel = editDialog.findViewById(R.id.btn_cancel);
+        Button bDelete = editDialog.findViewById(R.id.btn_delete);
         bOk.setOnClickListener(onEditDialogOk);
         bCancel.setOnClickListener(onEditDialogCancel);
         bDelete.setOnClickListener(onEditDialogDelete);
     }
 
     public void openEditDialog() {
-        Button delete = (Button) editDialog.findViewById(R.id.btn_delete);
-        TextView tvTitle = (TextView) editDialog.findViewById(R.id.tv_title);
-        EditText editText = (EditText) editDialog.findViewById(R.id.editText);
-        if (currentEntry.id > 0l) {
+        Button delete = editDialog.findViewById(R.id.btn_delete);
+        TextView tvTitle = editDialog.findViewById(R.id.tv_title);
+        EditText editText = editDialog.findViewById(R.id.editText);
+        if (currentEntry.id > 0L) {
             tvTitle.setText(getString(R.string.lbl_edit));
             editText.setText(currentEntry.text);
             delete.setVisibility(View.VISIBLE);
@@ -134,21 +139,19 @@ public class HomeScreen extends GenericScreenTemplate {
         editDialog.show();
     }
 
-    OnClickListener onAddClick = new OnClickListener() {
-        public void onClick(View v) {
-            currentEntry = new Entry();
-            openEditDialog();
-        }
+    OnClickListener onAddClick = v -> {
+        currentEntry = new Entry();
+        openEditDialog();
     };
 
     OnClickListener onEditDialogOk = new OnClickListener() {
         public void onClick(View v) {
-            EditText editText = (EditText) editDialog.findViewById(R.id.editText);
+            EditText editText = editDialog.findViewById(R.id.editText);
 
             if (currentEntry != null) {
                 currentEntry.text = editText.getText().toString();
 
-                boolean exists = currentEntry.id > 0l;
+                boolean exists = currentEntry.id > 0L;
                 if (DBDriver.getInstance().store(currentEntry)) {
                     if (!exists) {
                         SystemHelper.addEntry(currentEntry);
@@ -166,7 +169,7 @@ public class HomeScreen extends GenericScreenTemplate {
         public void onClick(View v) {
 
             if (currentEntry != null) {
-                boolean exists = currentEntry.id > 0l;
+                boolean exists = currentEntry.id > 0L;
                 if (exists && DBDriver.getInstance().delete(currentEntry)) {
                     SystemHelper.getEntries().remove(currentEntry);
                     updateLists();
@@ -196,15 +199,15 @@ public class HomeScreen extends GenericScreenTemplate {
 
     private void addRow(Entry entry) {
         View row = null;
-        if (row == null) {
-            // ROW INFLATION
-            LayoutInflater inflater = (LayoutInflater) this.getApplicationContext()
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            if (entry != null) {
-                row = inflater.inflate(R.layout.listitem, lTable, false);
-            } else {
-                row = inflater.inflate(R.layout.listitemempty, lTable, false);
-            }
+        // ROW INFLATION
+        LayoutInflater inflater = (LayoutInflater) this.getApplicationContext()
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        if (entry != null) {
+            assert inflater != null;
+            row = inflater.inflate(R.layout.listitem, lTable, false);
+        } else {
+            assert inflater != null;
+            row = inflater.inflate(R.layout.listitemempty, lTable, false);
         }
         if (row != null) {
             if (entry != null) {
@@ -215,14 +218,14 @@ public class HomeScreen extends GenericScreenTemplate {
                 row.setOnLongClickListener(onLongClickListener);
                 row.setOnClickListener(onRowClickListener);
 
-                txt = (TextView) row.findViewById(R.id.listitem_text);
-                more = (TextView) row.findViewById(R.id.listitem_marker2);
+                txt = row.findViewById(R.id.listitem_text);
+                more = row.findViewById(R.id.listitem_marker2);
 
                 if (!SystemHelper.isAutoTextSize(getApplicationContext()) && SystemHelper.getTextSize(getApplicationContext()) > 0) {
                     txt.setTextSize(TypedValue.COMPLEX_UNIT_DIP, SystemHelper.getTextSize(getApplicationContext()));
                 }
 
-                idField = (TextView) row.findViewById(R.id.listitem_id);
+                idField = row.findViewById(R.id.listitem_id);
                 idField.setText(Long.toString(entry.id));
 
                 String text = entry.text;
@@ -233,7 +236,7 @@ public class HomeScreen extends GenericScreenTemplate {
                 } else {
                     more.setVisibility(View.GONE);
                 }
-                txt.setMaxWidth(screenWidth - 50);
+                txt.setMaxWidth(getScreenWidth() - 50);
                 txt.setText(text);
             }
             // Get reference to TextView
@@ -242,32 +245,24 @@ public class HomeScreen extends GenericScreenTemplate {
 
     }
 
-    OnClickListener onRowClickListener = new OnClickListener() {
-
-        @Override
-        public void onClick(View v) {
-            TextView tv = (TextView) v.findViewById(R.id.listitem_id);
-            Long idx = Long.valueOf(tv.getText().toString());
-            currentEntry = SystemHelper.getEntry(idx.longValue());
-            if (currentEntry != null) {
-                currentEntry.expand = !currentEntry.expand;
-                updateLists();
-            }
+    OnClickListener onRowClickListener = v -> {
+        TextView tv = v.findViewById(R.id.listitem_id);
+        Long idx = Long.valueOf(tv.getText().toString());
+        currentEntry = SystemHelper.getEntry(idx);
+        if (currentEntry != null) {
+            currentEntry.expand = !currentEntry.expand;
+            updateLists();
         }
     };
 
-    OnLongClickListener onLongClickListener = new OnLongClickListener() {
-
-        @Override
-        public boolean onLongClick(View v) {
-            TextView tv = (TextView) v.findViewById(R.id.listitem_id);
-            Long idx = Long.valueOf(tv.getText().toString());
-            currentEntry = SystemHelper.getEntry(idx.longValue());
-            if (currentEntry != null) {
-                openEditDialog();
-            }
-            return false;
+    OnLongClickListener onLongClickListener = v -> {
+        TextView tv = v.findViewById(R.id.listitem_id);
+        Long idx = Long.valueOf(tv.getText().toString());
+        currentEntry = SystemHelper.getEntry(idx);
+        if (currentEntry != null) {
+            openEditDialog();
         }
+        return false;
     };
 
 }
