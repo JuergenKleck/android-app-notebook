@@ -1,5 +1,6 @@
 package info.simplyapps.app.notebook.screens;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import info.simplyapps.app.notebook.storage.DBDriver;
 import info.simplyapps.app.notebook.storage.FileDriver;
 import info.simplyapps.app.notebook.storage.StorageUtil;
 import info.simplyapps.app.notebook.storage.StoreData;
+import info.simplyapps.appengine.PermissionHelper;
 import info.simplyapps.appengine.screens.GenericScreenTemplate;
 import info.simplyapps.appengine.storage.dto.Configuration;
 
@@ -29,6 +31,7 @@ public class ConfigureScreen extends GenericScreenTemplate {
 
     private Dialog backupDialog;
     private EditText backupPath;
+
 
     /**
      * Called when the activity is first created.
@@ -39,53 +42,41 @@ public class ConfigureScreen extends GenericScreenTemplate {
 
         createBackupDialog();
 
-        Button btn = (Button) findViewById(R.id.btn_back_cfg);
+        Button btn = findViewById(R.id.btn_back_cfg);
         btn.setOnClickListener(onButtonBack);
 
-        Button bBackup = (Button) findViewById(R.id.btn_backup);
+        Button bBackup = findViewById(R.id.btn_backup);
         bBackup.setOnClickListener(onButtonBackup);
 
         CheckBox cbTextSize;
         SeekBar sbTextSize;
 
-        cbTextSize = (CheckBox) findViewById(R.id.configure_autotextsize);
+        cbTextSize = findViewById(R.id.configure_autotextsize);
         cbTextSize.setOnClickListener(onClickAutoTextSize);
         cbTextSize.setChecked(SystemHelper.isAutoTextSize(getApplicationContext()));
-        sbTextSize = (SeekBar) findViewById(R.id.configure_seektextsize);
+        sbTextSize = findViewById(R.id.configure_seektextsize);
         sbTextSize.setOnSeekBarChangeListener(onTextSizeChangeListener);
         if (SystemHelper.getTextSize(getApplicationContext()) > 0) {
-            TextView tv = (TextView) findViewById(R.id.configure_displaytextsize);
+            TextView tv = findViewById(R.id.configure_displaytextsize);
             tv.setText(Integer.toString(SystemHelper.getTextSize(getApplicationContext())) + Constants.CONFIG_TEXT_UNIT);
             sbTextSize.setProgress(SystemHelper.getTextSize(getApplicationContext()) - Constants.CONFIG_TEXT_ADD);
         }
     }
 
-    OnClickListener onButtonBack = new OnClickListener() {
-        public void onClick(View v) {
-            actionBack();
-        }
-    };
+    OnClickListener onButtonBack = v -> actionBack();
 
-    OnClickListener onButtonBackup = new OnClickListener() {
-        public void onClick(View v) {
-            actionBackup();
-        }
-    };
+    OnClickListener onButtonBackup = v -> actionBackup();
 
     private void setAutoTextSize(String cnstTextSize, String defTextSize) {
         Configuration config = SystemHelper.getConfiguration(cnstTextSize, defTextSize);
-        config.value = Boolean.toString(!Boolean.valueOf(config.value).booleanValue());
+        config.value = Boolean.toString(!Boolean.valueOf(config.value));
         DBDriver.getInstance().store(config);
     }
 
-    OnClickListener onClickAutoTextSize = new OnClickListener() {
-        public void onClick(View v) {
-            setAutoTextSize(Constants.CONFIG_AUTOTEXTSIZE, Constants.DEFAULT_CONFIG_AUTOTEXTSIZE);
-        }
-    };
+    OnClickListener onClickAutoTextSize = v -> setAutoTextSize(Constants.CONFIG_AUTOTEXTSIZE, Constants.DEFAULT_CONFIG_AUTOTEXTSIZE);
 
     private void updateTextSize(SeekBar seekBar, int progress, int textViewId, String cnstTextSize, String defTextSize) {
-        TextView tv = (TextView) LinearLayout.class.cast(seekBar.getParent()).findViewById(textViewId);
+        TextView tv = ((LinearLayout) seekBar.getParent()).findViewById(textViewId);
         tv.setText(Integer.toString(progress + Constants.CONFIG_TEXT_ADD) + Constants.CONFIG_TEXT_UNIT);
         int newSize = progress + Constants.CONFIG_TEXT_ADD;
         Configuration config = SystemHelper.getConfiguration(cnstTextSize, defTextSize);
@@ -154,25 +145,30 @@ public class ConfigureScreen extends GenericScreenTemplate {
     };
 
     private void readWriteExternalFile(boolean write) {
-        FileDriver.readWriteExternalFile(this, write, backupPath.getText().toString());
+        if (!write && checkPermission( Manifest.permission.READ_EXTERNAL_STORAGE, Boolean.TRUE)) {
+            FileDriver.readWriteExternalFile(this, false, backupPath.getText().toString());
+        }
+        else if (write && checkPermission( Manifest.permission.WRITE_EXTERNAL_STORAGE, Boolean.TRUE)) {
+            FileDriver.readWriteExternalFile(this, true, backupPath.getText().toString());
+        }
     }
 
     private void createBackupDialog() {
 
         // prepare backup dialog
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View border = inflater.inflate(R.layout.backupdialog, null);
-        backupDialog = new Dialog(this, R.style.Theme_Dialog);
+        assert inflater != null;
+        backupDialog = new Dialog(this, R.style.Theme_AppCompat_Dialog);
         backupDialog.setContentView(R.layout.backupdialog);
 
-        Button bExport = (Button) backupDialog.findViewById(R.id.backup_export);
-        Button bImport = (Button) backupDialog.findViewById(R.id.backup_import);
-        Button bCancel = (Button) backupDialog.findViewById(R.id.backup_cancel);
+        Button bExport = backupDialog.findViewById(R.id.backup_export);
+        Button bImport = backupDialog.findViewById(R.id.backup_import);
+        Button bCancel = backupDialog.findViewById(R.id.backup_cancel);
         bExport.setOnClickListener(onBackupDialogExport);
         bImport.setOnClickListener(onBackupDialogImport);
         bCancel.setOnClickListener(onBackupDialogCancel);
 
-        backupPath = (EditText) backupDialog.findViewById(R.id.backup_path);
+        backupPath = backupDialog.findViewById(R.id.backup_path);
     }
 
     public void openBackupDialog() {
@@ -180,5 +176,13 @@ public class ConfigureScreen extends GenericScreenTemplate {
         backupDialog.show();
     }
 
-
+    @Override
+    public void onPermissionResult(String permission, boolean granted) {
+        if(granted && permission.equals(Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            FileDriver.readWriteExternalFile(this, false, backupPath.getText().toString());
+            DBDriver.getInstance().write(StoreData.getInstance());
+        } else if (granted && permission.equals(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            FileDriver.readWriteExternalFile(this, true, backupPath.getText().toString());
+        }
+    }
 }

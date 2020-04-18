@@ -6,28 +6,29 @@
     android:padding="10dp"
      >
 
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/lbl_add"
-        android:textColor="#FFF"
-        android:textSize="18sp"
-        android:layout_marginBottom="15dp" />
-        
-    <EditText android:id="@+id/editText"
-	   android:layout_width="fill_parent"
-	   android:layout_height="wrap_content"
-	   android:background="@android:color/white"
-	   android:textColor="#000"
-	   android:inputType="textMultiLine"
-	   android:minLines="4"
-	   android:scrollHorizontally="false"
-	   android:singleLine="false"
-	   android:maxLines="8"
-	   android:gravity="top"
-	   android:layout_marginBottom="5dp"
-	   android:layout_below="@+id/tv_title" />
+	<TextView
+		android:id="@+id/tv_title"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginBottom="15dp"
+		android:text="@string/lbl_add"
+		android:textColor="#000"
+		android:textSize="18sp" />
+
+	<EditText
+		android:id="@+id/editText"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/tv_title"
+		android:layout_marginBottom="5dp"
+		android:background="@drawable/input_border"
+		android:gravity="top"
+		android:inputType="textMultiLine"
+		android:maxLines="8"
+		android:minLines="4"
+		android:scrollHorizontally="false"
+		android:singleLine="false"
+		android:textColor="#000" />
 
 	<Button
 		android:id="@+id/btn_ok"
