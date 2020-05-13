@@ -8,10 +8,26 @@ Notebook Android app
 
 Simple notebook application
 
-## How to use
+### In-app description
 
 Add items to the notebook.
 Edit or delete items.
+
+## How to use
+
+Build and install
+
+## Build
+
+Build with gradle according to the Android developer website via command-line https://developer.android.com/studio/build/building-cmdline
+or with Android Studio.
+
+### Dependencies
+
+This app requires the following dependencies built as .aar file.
+These projects can be found within GitHub parallel to this repository.
+
+- android-lib-appengine
 
 ## Google Play Store
 
