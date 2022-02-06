@@ -1,5 +1,10 @@
-package info.simplyapps.app.notebook;
+package com.juergenkleck.android.app.notebook;
 
+/**
+ * Android app - Notebook
+ *
+ * Copyright 2022 by Juergen Kleck <develop@juergenkleck.com>
+ */
 public class Constants {
 
     public static final String DATABASE = "NoteBook.db";

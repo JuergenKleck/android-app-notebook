@@ -1,4 +1,4 @@
-package info.simplyapps.app.notebook.storage;
+package com.juergenkleck.android.app.notebook.storage;
 
 import android.app.Activity;
 import android.os.Environment;
@@ -20,17 +20,22 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import info.simplyapps.app.notebook.Constants;
-import info.simplyapps.app.notebook.R;
-import info.simplyapps.app.notebook.SystemHelper;
-import info.simplyapps.app.notebook.storage.dto.Entry;
-import info.simplyapps.app.notebook.storage.dto.RootItem;
+import com.juergenkleck.android.app.notebook.Constants;
+import com.juergenkleck.android.app.notebook.R;
+import com.juergenkleck.android.app.notebook.SystemHelper;
+import com.juergenkleck.android.app.notebook.storage.dto.Entry;
+import com.juergenkleck.android.app.notebook.storage.dto.RootItem;
 
+/**
+ * Android app - Notebook
+ *
+ * Copyright 2022 by Juergen Kleck <develop@juergenkleck.com>
+ */
 public class FileDriver {
 
     private static final String ns = null;
 
-    public static final String FILENAME = "simplyapps.notebook.xml";
+    public static final String FILENAME = "app.notebook.xml";
 
     public static void readWriteExternalFile(Activity activity, boolean write, String fullpath) {
         boolean mExternalStorageAvailable = false;

@@ -1,4 +1,4 @@
-package info.simplyapps.app.notebook.screens;
+package com.juergenkleck.android.app.notebook.screens;
 
 import android.Manifest;
 import android.app.Dialog;
@@ -16,17 +16,22 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
-import info.simplyapps.app.notebook.Constants;
-import info.simplyapps.app.notebook.R;
-import info.simplyapps.app.notebook.SystemHelper;
-import info.simplyapps.app.notebook.storage.DBDriver;
-import info.simplyapps.app.notebook.storage.FileDriver;
-import info.simplyapps.app.notebook.storage.StorageUtil;
-import info.simplyapps.app.notebook.storage.StoreData;
-import info.simplyapps.appengine.PermissionHelper;
-import info.simplyapps.appengine.screens.GenericScreenTemplate;
-import info.simplyapps.appengine.storage.dto.Configuration;
+import com.juergenkleck.android.app.notebook.Constants;
+import com.juergenkleck.android.app.notebook.R;
+import com.juergenkleck.android.app.notebook.SystemHelper;
+import com.juergenkleck.android.app.notebook.storage.DBDriver;
+import com.juergenkleck.android.app.notebook.storage.FileDriver;
+import com.juergenkleck.android.app.notebook.storage.StorageUtil;
+import com.juergenkleck.android.app.notebook.storage.StoreData;
+import com.juergenkleck.android.appengine.PermissionHelper;
+import com.juergenkleck.android.appengine.screens.GenericScreenTemplate;
+import com.juergenkleck.android.appengine.storage.dto.Configuration;
 
+/**
+ * Android app - Notebook
+ *
+ * Copyright 2022 by Juergen Kleck <develop@juergenkleck.com>
+ */
 public class ConfigureScreen extends GenericScreenTemplate {
 
     private Dialog backupDialog;
@@ -184,5 +189,10 @@ public class ConfigureScreen extends GenericScreenTemplate {
         } else if (granted && permission.equals(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             FileDriver.readWriteExternalFile(this, true, backupPath.getText().toString());
         }
+    }
+
+    @Override
+    public void onScreenCreate(Bundle bundle) {
+
     }
 }

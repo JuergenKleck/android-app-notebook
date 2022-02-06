@@ -1,11 +1,16 @@
-package info.simplyapps.app.notebook.storage.dto;
+package com.juergenkleck.android.app.notebook.storage.dto;
 
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 
-import info.simplyapps.appengine.storage.dto.BasicTable;
+import com.juergenkleck.android.appengine.storage.dto.BasicTable;
 
+/**
+ * Android app - Notebook
+ *
+ * Copyright 2022 by Juergen Kleck <develop@juergenkleck.com>
+ */
 public class Entry extends BasicTable implements Serializable {
 
     /**
