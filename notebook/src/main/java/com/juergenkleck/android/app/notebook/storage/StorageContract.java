@@ -1,8 +1,13 @@
-package info.simplyapps.app.notebook.storage;
+package com.juergenkleck.android.app.notebook.storage;
 
 import android.provider.BaseColumns;
 
-public final class StorageContract extends info.simplyapps.appengine.storage.StorageContract {
+/**
+ * Android app - Notebook
+ *
+ * Copyright 2022 by Juergen Kleck <develop@juergenkleck.com>
+ */
+public final class StorageContract extends com.juergenkleck.android.appengine.storage.StorageContract {
 
     // Prevents the StorageContract class from being instantiated.
     private StorageContract() {

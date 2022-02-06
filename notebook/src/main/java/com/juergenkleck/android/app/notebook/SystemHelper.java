@@ -1,14 +1,19 @@
-package info.simplyapps.app.notebook;
+package com.juergenkleck.android.app.notebook;
 
 import android.content.Context;
 
 import java.util.List;
 
-import info.simplyapps.app.notebook.storage.StoreData;
-import info.simplyapps.app.notebook.storage.dto.Entry;
-import info.simplyapps.appengine.storage.dto.Configuration;
+import com.juergenkleck.android.app.notebook.storage.StoreData;
+import com.juergenkleck.android.app.notebook.storage.dto.Entry;
+import com.juergenkleck.android.appengine.storage.dto.Configuration;
 
-public class SystemHelper extends info.simplyapps.appengine.SystemHelper {
+/**
+ * Android app - Notebook
+ *
+ * Copyright 2022 by Juergen Kleck <develop@juergenkleck.com>
+ */
+public class SystemHelper extends com.juergenkleck.android.appengine.SystemHelper {
 
     public synchronized static List<Entry> getEntries() {
         return StoreData.getInstance().entries;

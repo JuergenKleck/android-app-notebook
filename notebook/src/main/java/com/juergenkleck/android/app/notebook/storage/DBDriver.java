@@ -1,4 +1,4 @@
-package info.simplyapps.app.notebook.storage;
+package com.juergenkleck.android.app.notebook.storage;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -10,11 +10,16 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
-import info.simplyapps.app.notebook.Constants;
-import info.simplyapps.app.notebook.storage.dto.Entry;
-import info.simplyapps.appengine.storage.dto.BasicTable;
+import com.juergenkleck.android.app.notebook.Constants;
+import com.juergenkleck.android.app.notebook.storage.dto.Entry;
+import com.juergenkleck.android.appengine.storage.dto.BasicTable;
 
-public class DBDriver extends info.simplyapps.appengine.storage.DBDriver {
+/**
+ * Android app - Notebook
+ *
+ * Copyright 2022 by Juergen Kleck <develop@juergenkleck.com>
+ */
+public class DBDriver extends com.juergenkleck.android.appengine.storage.DBDriver {
 
 
     private static final String SQL_CREATE_ENTRY =
@@ -32,7 +37,7 @@ public class DBDriver extends info.simplyapps.appengine.storage.DBDriver {
     }
 
     public static DBDriver getInstance() {
-        return (DBDriver) info.simplyapps.appengine.storage.DBDriver.getInstance();
+        return (DBDriver) com.juergenkleck.android.appengine.storage.DBDriver.getInstance();
     }
 
     @Override
@@ -51,17 +56,17 @@ public class DBDriver extends info.simplyapps.appengine.storage.DBDriver {
     }
 
     @Override
-    public void storeExtended(info.simplyapps.appengine.storage.StoreData data) {
+    public void storeExtended(com.juergenkleck.android.appengine.storage.StoreData data) {
         store(StoreData.class.cast(data).entries);
     }
 
     @Override
-    public void readExtended(info.simplyapps.appengine.storage.StoreData data, SQLiteDatabase db) {
+    public void readExtended(com.juergenkleck.android.appengine.storage.StoreData data, SQLiteDatabase db) {
         readEntries(StoreData.class.cast(data), db);
     }
 
     @Override
-    public info.simplyapps.appengine.storage.StoreData createStoreData() {
+    public com.juergenkleck.android.appengine.storage.StoreData createStoreData() {
         return new StoreData();
     }
 

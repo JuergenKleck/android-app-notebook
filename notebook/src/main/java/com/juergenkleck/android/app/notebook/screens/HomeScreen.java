@@ -1,5 +1,5 @@
 
-package info.simplyapps.app.notebook.screens;
+package com.juergenkleck.android.app.notebook.screens;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -21,13 +21,18 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import info.simplyapps.app.notebook.R;
-import info.simplyapps.app.notebook.SystemHelper;
-import info.simplyapps.app.notebook.storage.DBDriver;
-import info.simplyapps.app.notebook.storage.StorageUtil;
-import info.simplyapps.app.notebook.storage.dto.Entry;
-import info.simplyapps.appengine.screens.GenericScreenTemplate;
+import com.juergenkleck.android.app.notebook.R;
+import com.juergenkleck.android.app.notebook.SystemHelper;
+import com.juergenkleck.android.app.notebook.storage.DBDriver;
+import com.juergenkleck.android.app.notebook.storage.StorageUtil;
+import com.juergenkleck.android.app.notebook.storage.dto.Entry;
+import com.juergenkleck.android.appengine.screens.GenericScreenTemplate;
 
+/**
+ * Android app - Notebook
+ *
+ * Copyright 2022 by Juergen Kleck <develop@juergenkleck.com>
+ */
 public class HomeScreen extends GenericScreenTemplate {
 
     private ViewGroup lTable;
@@ -97,6 +102,11 @@ public class HomeScreen extends GenericScreenTemplate {
 
     @Override
     public void onPermissionResult(String s, boolean b) {
+    }
+
+    @Override
+    public void onScreenCreate(Bundle bundle) {
+
     }
 
     public void actionSettings() {
